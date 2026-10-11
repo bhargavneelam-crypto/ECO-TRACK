@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EcoTrack — Smart Green Campus</title>
+  <meta name="description" content="EcoTrack is a college mini project that helps students reduce waste, save water and electricity, recycle, and join eco challenges.">
+
+  <!-- Fonts: if offline, the fallback fonts in style.css are used automatically -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Optional enhancements only (counters, bar animation, menu closing). The page works without it. -->
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+
+  <!-- =========================================================
+       SVG SPRITE: icons and illustrations reused across the page
+       (inline SVG = no image files to lose, works offline)
+       ========================================================= -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Line icons (24x24) -->
+      <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4C10 4 4 9 4 15c0 3 2 5 5 5 6 0 11-6 11-16z"/><path d="M4 20c3-5 6-8 11-11"/></symbol>
+      <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3C9 8 6 11 6 15a6 6 0 0 0 12 0c0-4-3-7-6-12z"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 5 14h6l-1 8 8-12h-6z"/></symbol>
+      <symbol id="i-recycle" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-14 5"/><path d="M4 20v-4h4"/></symbol>
+      <symbol id="i-tree" viewBox="0 0 24 24"><path d="m12 3 5 7h-3l4 6H6l4-6H7z"/><path d="M12 16v5"/></symbol>
+      <symbol id="i-badge" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 8 5-3 5 3-1.5-8"/></symbol>
+      <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10c1 1 1 3 1 3h6s0-2 1-3a6 6 0 0 0-4-10z"/></symbol>
+      <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21h8"/><path d="M12 16v5"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+      <symbol id="i-tap" viewBox="0 0 24 24"><path d="M5 9h9a4 4 0 0 1 4 4v1"/><path d="M9 9V5h4"/><path d="M5 9v3"/><path d="M18 17c-1 1.4-1 2.2-1 2.6a1 1 0 0 0 2 0c0-.4 0-1.200-1-2.600z"/></symbol>
+      <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.500 6.500a4 4 0 0 0 5 5L10 21a2.100 2.100 0 0 1-3-3z"/><path d="m15 3 3 3"/></symbol>
+      <symbol id="i-cup" viewBox="0 0 24 24"><path d="M6 3h12l-1.500 17a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1z"/><path d="M6.500 9h11"/></symbol>
+      <symbol id="i-pot" viewBox="0 0 24 24"><path d="M12 12c0-4 2-6 6-6 0 4-2 6-6 6z"/><path d="M12 12c0-3-1.500-5-5-5 0 3 1.500 5 5 5z"/><path d="M12 12v3"/><path d="M7 15h10l-1 6H8z"/></symbol>
+      <symbol id="i-switch" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="3"/><path d="M12 7v4"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z"/><circle cx="12" cy="9" r="2.500"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+
+      <!-- Illustrations (200x120), colours are fixed inside each symbol -->
+      <symbol id="ill-wet" viewBox="0 0 200 120">
+        <rect width="200" height="120" fill="#DCEBCB"/>
+        <rect x="64" y="30" width="72" height="12" rx="5" fill="#1F5E26"/>
+        <path d="M70 44h60l-5 62a6 6 0 0 1-6 5H81a6 6 0 0 1-6-5z" fill="#2F7D32"/>
+        <path d="M90 58v38M110 58v38" stroke="#26692A" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="38" cy="88" r="15" fill="#D9534F"/>
+        <path d="M38 73c0-7 4-9 8-10" stroke="#2F7D32" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M150 104c0-22 14-32 32-34 0 20-12 32-32 34z" fill="#6DB33F"/>
+      </symbol>
+      <symbol id="ill-dry" viewBox="0 0 200 120">
+        <rect width="200" height="120" fill="#D6E6F2"/>
+        <rect x="64" y="30" width="72" height="12" rx="5" fill="#1F5784"/>
+        <path d="M70 44h60l-5 62a6 6 0 0 1-6 5H81a6 6 0 0 1-6-5z" fill="#2F6FA3"/>
+        <rect x="22" y="58" width="36" height="46" rx="3" fill="#fff" transform="rotate(-8 40 81)"/>
+        <path d="M30 72h20M30 82h20M30 92h14" stroke="#9DB7CC" stroke-width="3" stroke-linecap="round" transform="rotate(-8 40 81)"/>
+        <rect x="146" y="70" width="40" height="36" rx="3" fill="#C99A5B"/>
+        <path d="M146 82h40" stroke="#A97B3F" stroke-width="3"/>
+      </symbol>
+      <symbol id="ill-ewaste" viewBox="0 0 200 120">
+        <rect width="200" height="120" fill="#E3DFF0"/>
+        <rect x="50" y="20" width="100" height="62" rx="7" fill="#4A4568"/>
+        <rect x="58" y="28" width="84" height="46" rx="3" fill="#9FD3C7"/>
+        <path d="M70 60l14-14 12 10 18-16 14 12" stroke="#2F7D6B" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="92" y="82" width="16" height="12" fill="#4A4568"/>
+        <rect x="72" y="94" width="56" height="7" rx="3.500" fill="#4A4568"/>
+        <rect x="158" y="68" width="28" height="18" rx="3" fill="#6DB33F"/>
+        <rect x="186" y="73" width="4" height="8" rx="1" fill="#6DB33F"/>
+        <path d="M14 96h26a8 8 0 0 0 0-16" stroke="#4A4568" stroke-width="3.500" fill="none" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="ill-recycle" viewBox="0 0 200 120">
+        <rect width="200" height="120" fill="#F7E7B8"/>
+        <g fill="none" stroke="#2F7D32" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M72 62a30 30 0 0 1 52-14"/>
+          <path d="M128 58a30 30 0 0 1-52 14"/>
+        </g>
+        <path d="M134 28v26h-26z" fill="#2F7D32"/>
+        <path d="M66 92V66h26z" fill="#2F7D32"/>
+        <rect x="20" y="52" width="16" height="44" rx="6" fill="#9ACBD6"/>
+        <rect x="24" y="44" width="8" height="10" rx="2" fill="#2F7F9E"/>
+        <rect x="164" y="62" width="26" height="34" rx="4" fill="#B8B8B8"/>
+        <path d="M164 72h26M164 86h26" stroke="#8E8E8E" stroke-width="3"/>
+      </symbol>
+      <symbol id="ill-plastic" viewBox="0 0 200 120">
+        <rect width="200" height="120" fill="#D8EEF0"/>
+        <rect x="88" y="34" width="24" height="64" rx="9" fill="#9ACBD6"/>
+        <rect x="94" y="24" width="12" height="12" rx="2" fill="#2F7F9E"/>
+        <circle cx="100" cy="64" r="44" fill="none" stroke="#D9534F" stroke-width="8"/>
+        <path d="M69 95 131 33" stroke="#D9534F" stroke-width="8" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="ill-tree" viewBox="0 0 200 120">
+        <rect width="200" height="120" fill="#DDEBD3"/>
+        <circle cx="160" cy="28" r="14" fill="#F6D27A"/>
+        <path d="M0 104c40-12 80-12 120-4s60 4 80-2v22H0z" fill="#A9D08E"/>
+        <rect x="94" y="62" width="12" height="42" rx="3" fill="#8A5A34"/>
+        <circle cx="100" cy="48" r="28" fill="#4C9A2A"/>
+        <circle cx="82" cy="58" r="16" fill="#5DAE36"/>
+        <circle cx="120" cy="56" r="16" fill="#3E8723"/>
+        <path d="M40 104c0-12 6-18 14-20 0 10-4 18-14 20z" fill="#6DB33F"/>
+      </symbol>
+      <symbol id="ill-bottle" viewBox="0 0 200 120">
+        <rect width="200" height="120" fill="#DCEBF7"/>
+        <rect x="86" y="14" width="28" height="14" rx="4" fill="#14452F"/>
+        <rect x="76" y="28" width="48" height="84" rx="14" fill="#fff" stroke="#2F7F9E" stroke-width="4"/>
+        <path d="M80 70c10-8 14 8 24 0s12-4 16 0v28a10 10 0 0 1-10 10H90a10 10 0 0 1-10-10z" fill="#7CC3E0"/>
+        <path d="M100 44c-8 2-12 8-12 14 8 0 12-6 12-14z" fill="#4C9A2A"/>
+      </symbol>
+      <symbol id="ill-cleanup" viewBox="0 0 200 120">
+        <rect width="200" height="120" fill="#F1E6CF"/>
+        <path d="M0 98h200v22H0z" fill="#CBB98E"/>
+        <path d="M78 98c-14 0-20-14-14-30 3-8 10-14 18-16l6-8h12l6 8c8 2 15 8 18 16 6 16 0 30-14 30z" fill="#4C9A2A"/>
+        <path d="M94 44l6-10 6 10z" fill="#2F7D32"/>
+        <path d="M82 70c6 8 30 8 36 0" stroke="#3E8723" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <rect x="26" y="88" width="14" height="8" rx="2" fill="#D9534F" transform="rotate(-18 33 92)"/>
+        <rect x="152" y="86" width="12" height="12" rx="2" fill="#9ACBD6"/>
+        <circle cx="178" cy="92" r="6" fill="#F6D27A"/>
+      </symbol>
+      <symbol id="ill-power" viewBox="0 0 200 120">
+        <rect width="200" height="120" fill="#FBEFC4"/>
+        <g stroke="#E0A100" stroke-width="5" stroke-linecap="round"><path d="M100 8v10M54 28l7 7M146 28l-7 7M36 62h10M154 62h10"/></g>
+        <circle cx="100" cy="58" r="30" fill="#F6D27A"/>
+        <path d="M88 52c4 6 8 6 12 0s8-6 12 0" stroke="#E0A100" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <rect x="86" y="86" width="28" height="8" rx="3" fill="#8A8A8A"/>
+        <rect x="90" y="96" width="20" height="8" rx="3" fill="#6B6B6B"/>
+        <path d="M100 94v-14" stroke="#E0A100" stroke-width="3"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- =========================================================
+       A. NAVIGATION BAR
+       The menu opens on small screens with a hidden checkbox (CSS only).
+       ========================================================= -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#home" aria-label="EcoTrack home">
+        <span class="logo-mark"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+        <span class="logo-text">EcoTrack</span>
+      </a>
+
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-burger">
+        <span class="sr-only">Open or close the menu</span>
+        <span class="bars" aria-hidden="true"></span>
+      </label>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#waste">Waste Management</a></li>
+          <li><a href="#resources">Save Resources</a></li>
+          <li><a href="#challenges">Eco Challenges</a></li>
+          <li><a href="#dashboard">Green Dashboard</a></li>
+          <li><a href="#about">About Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- =========================================================
+         B. HERO
+         ========================================================= -->
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <!-- Campus scene drawn with SVG shapes: sky, hills, building with solar panels, trees -->
+      <svg class="hero-scene" viewBox="0 0 1440 620" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#E1F0DC"/>
+            <stop offset="1" stop-color="#FBF8EC"/>
+          </linearGradient>
+        </defs>
+        <rect width="1440" height="620" fill="url(#sky)"/>
+        <circle cx="1130" cy="130" r="62" fill="#F6D27A" opacity=".85"/>
+        <path d="M0 430C240 350 430 390 650 410s400-80 790-10V620H0z" fill="#CFE5C0"/>
+        <!-- college building -->
+        <g transform="translate(880 290)">
+          <rect x="0" y="86" width="400" height="140" fill="#F3EBD6"/>
+          <path d="M-14 88 200 20l214 68z" fill="#14452F"/>
+          <rect x="150" y="30" width="100" height="14" rx="4" fill="#2F7F9E"/>
+          <rect x="50" y="42" width="60" height="14" rx="4" fill="#2F7F9E" transform="rotate(-9 80 49)"/>
+          <rect x="290" y="42" width="60" height="14" rx="4" fill="#2F7F9E" transform="rotate(9 320 49)"/>
+          <g fill="#C9D9B8">
+            <rect x="24" y="112" width="40" height="52" rx="3"/><rect x="88" y="112" width="40" height="52" rx="3"/>
+            <rect x="272" y="112" width="40" height="52" rx="3"/><rect x="336" y="112" width="40" height="52" rx="3"/>
+          </g>
+          <rect x="170" y="130" width="60" height="96" rx="4" fill="#14452F"/>
+          <g fill="#E7DDC0"><rect x="146" y="96" width="10" height="130"/><rect x="244" y="96" width="10" height="130"/></g>
+        </g>
+        <path d="M0 490c220-50 460-20 720-10s460-40 720 0V620H0z" fill="#A9D08E"/>
+        <!-- trees -->
+        <g>
+          <rect x="805" y="440" width="14" height="80" rx="4" fill="#8A5A34"/>
+          <circle cx="812" cy="420" r="50" fill="#4C9A2A"/><circle cx="786" cy="440" r="28" fill="#5DAE36"/><circle cx="842" cy="438" r="28" fill="#3E8723"/>
+          <rect x="1343" y="450" width="14" height="76" rx="4" fill="#8A5A34"/>
+          <circle cx="1350" cy="430" r="44" fill="#4C9A2A"/><circle cx="1326" cy="448" r="24" fill="#5DAE36"/>
+        </g>
+        <path d="M0 548c300-36 600 10 900-12s420-20 540 6V620H0z" fill="#14452F"/>
+        <path d="M0 590c360-26 760 14 1440-14V620H0z" fill="#0E3322"/>
+      </svg>
+
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1 id="hero-title">Make Every Action Count.</h1>
+          <p class="hero-sub">Small actions today. A greener campus tomorrow.</p>
+          <p class="hero-note">Switch off. Refill. Segregate. Repeat. A green campus is built from everyday habits.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="#resources">Explore Eco Tips</a>
+            <a class="btn btn-light" href="#challenges">Join Eco Challenges</a>
+          </div>
+        </div>
+
+        <aside class="hero-pledge" aria-label="The three Rs">
+          <h2 class="pledge-title">Start with the three Rs</h2>
+          <ul>
+            <li><span class="pledge-icon"><svg class="icon" aria-hidden="true"><use href="#i-switch"/></svg></span><span><strong>Reduce</strong> what you use and throw away</span></li>
+            <li><span class="pledge-icon"><svg class="icon" aria-hidden="true"><use href="#i-cup"/></svg></span><span><strong>Reuse</strong> bottles, bags and paper</span></li>
+            <li><span class="pledge-icon"><svg class="icon" aria-hidden="true"><use href="#i-recycle"/></svg></span><span><strong>Recycle</strong> clean, sorted materials</span></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         C. SUSTAINABILITY STATISTICS (sample figures)
+         ========================================================= -->
+    <section class="stats" id="stats" aria-labelledby="stats-title">
+      <div class="container">
+        <h2 id="stats-title" class="sr-only">Campus sustainability statistics</h2>
+        <ul class="stat-grid">
+          <li class="stat-card stat-waste">
+            <span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-recycle"/></svg></span>
+            <p class="stat-value"><span class="count" data-target="250">250</span> <span class="unit">kg</span></p>
+            <p class="stat-label">of waste recycled</p>
+          </li>
+          <li class="stat-card stat-water">
+            <span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-drop"/></svg></span>
+            <p class="stat-value"><span class="count" data-target="1200">1,200</span> <span class="unit">litres</span></p>
+            <p class="stat-label">of water saved</p>
+          </li>
+          <li class="stat-card stat-energy">
+            <span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg></span>
+            <p class="stat-value"><span class="count" data-target="180">180</span> <span class="unit">kWh</span></p>
+            <p class="stat-label">of energy saved</p>
+          </li>
+          <li class="stat-card stat-trees">
+            <span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#i-tree"/></svg></span>
+            <p class="stat-value"><span class="count" data-target="75">75</span></p>
+            <p class="stat-label">trees planted</p>
+          </li>
+        </ul>
+        <p class="sample-note">Sample demonstration figures. They are not verified campus data.</p>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         D. WASTE MANAGEMENT GUIDE
+         ========================================================= -->
+    <section class="section section-white" id="waste" aria-labelledby="waste-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="waste-title">Waste Management Guide</h2>
+          <p>Sorting waste at the source is the single easiest habit that makes recycling and composting possible. Learn what goes where.</p>
+        </header>
+
+        <div class="grid grid-4">
+          <article class="card waste-card">
+            <svg class="illus" viewBox="0 0 200 120" role="img" aria-label="Green bin with food scraps and leaves"><use href="#ill-wet"/></svg>
+            <div class="card-body">
+              <h3>Wet waste</h3>
+              <p class="mini-title">Examples</p>
+              <p class="chips"><span>Food scraps</span><span>Fruit and vegetable peels</span><span>Tea leaves</span><span>Garden leaves</span></p>
+              <p class="mini-title">How to dispose</p>
+              <p>Use the wet-waste bin. Keep plastic wrappers and tissues out, and empty the bin daily.</p>
+              <p class="benefit"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span>Can be composted into soil nutrients and keeps food waste out of landfills.</span></p>
+            </div>
+          </article>
+
+          <article class="card waste-card">
+            <svg class="illus" viewBox="0 0 200 120" role="img" aria-label="Blue bin with paper and a cardboard box"><use href="#ill-dry"/></svg>
+            <div class="card-body">
+              <h3>Dry waste</h3>
+              <p class="mini-title">Examples</p>
+              <p class="chips"><span>Paper</span><span>Cardboard</span><span>Clean wrappers</span><span>Cloth scraps</span></p>
+              <p class="mini-title">How to dispose</p>
+              <p>Keep it clean and dry. Flatten boxes and put everything in the dry-waste bin.</p>
+              <p class="benefit"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span>Clean, dry waste is far easier to sort and send for recycling.</span></p>
+            </div>
+          </article>
+
+          <article class="card waste-card">
+            <svg class="illus" viewBox="0 0 200 120" role="img" aria-label="Old monitor, battery and a charging cable"><use href="#ill-ewaste"/></svg>
+            <div class="card-body">
+              <h3>E-waste</h3>
+              <p class="mini-title">Examples</p>
+              <p class="chips"><span>Chargers and cables</span><span>Batteries</span><span>Old phones</span><span>Earphones</span></p>
+              <p class="mini-title">How to dispose</p>
+              <p>Never put it in a normal bin. Hand it to a department e-waste collection point or an authorised recycler.</p>
+              <p class="benefit"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span>Recovers useful metals and keeps harmful substances out of soil and water.</span></p>
+            </div>
+          </article>
+
+          <article class="card waste-card">
+            <svg class="illus" viewBox="0 0 200 120" role="img" aria-label="Recycling arrows with a bottle and a metal can"><use href="#ill-recycle"/></svg>
+            <div class="card-body">
+              <h3>Recyclable materials</h3>
+              <p class="mini-title">Examples</p>
+              <p class="chips"><span>Plastic bottles</span><span>Glass bottles</span><span>Metal cans</span><span>Clean paper</span></p>
+              <p class="mini-title">How to dispose</p>
+              <p>Empty, rinse and dry each item, then place it in the recycling bin.</p>
+              <p class="benefit"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span>Saves raw materials and the energy needed to make new products.</span></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         E. SAVE WATER AND ELECTRICITY
+         ========================================================= -->
+    <section class="section section-cream" id="resources" aria-labelledby="resources-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="resources-title">Save Water and Electricity</h2>
+          <p>Most savings come from small habits that take seconds. Pick one tip from each group and make it automatic.</p>
+        </header>
+
+        <div class="resource-split">
+          <div class="resource-group group-water">
+            <h3 class="group-title"><svg class="icon" aria-hidden="true"><use href="#i-drop"/></svg> Water-saving tips</h3>
+            <div class="grid grid-2">
+              <article class="card tip-card">
+                <span class="tip-icon"><svg class="icon" aria-hidden="true"><use href="#i-tap"/></svg></span>
+                <h4>Close taps properly</h4>
+                <p>Turn the tap off fully after every use. A slow drip adds up over a whole day.</p>
+                <p class="reminder">Reminder: check the tap before you walk away.</p>
+              </article>
+              <article class="card tip-card">
+                <span class="tip-icon"><svg class="icon" aria-hidden="true"><use href="#i-wrench"/></svg></span>
+                <h4>Report water leaks</h4>
+                <p>Tell the maintenance office about leaking taps, pipes and flush tanks as soon as you see them.</p>
+                <p class="reminder">Reminder: a quick report saves a lot of water.</p>
+              </article>
+              <article class="card tip-card">
+                <span class="tip-icon"><svg class="icon" aria-hidden="true"><use href="#i-cup"/></svg></span>
+                <h4>Avoid unnecessary usage</h4>
+                <p>Use only what you need: fill your bottle to the amount you will drink and switch the tap off while washing hands.</p>
+                <p class="reminder">Reminder: pour only what you will finish.</p>
+              </article>
+              <article class="card tip-card">
+                <span class="tip-icon"><svg class="icon" aria-hidden="true"><use href="#i-pot"/></svg></span>
+                <h4>Reuse water where appropriate</h4>
+                <p>Use leftover drinking water for plants. Use non-drinking water for cleaning jobs where it is safe to do so.</p>
+                <p class="reminder">Reminder: never reuse water for drinking.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="resource-group group-power">
+            <h3 class="group-title"><svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg> Electricity-saving tips</h3>
+            <div class="grid grid-2">
+              <article class="card tip-card">
+                <span class="tip-icon"><svg class="icon" aria-hidden="true"><use href="#i-switch"/></svg></span>
+                <h4>Switch off unused lights and fans</h4>
+                <p>The last person to leave a classroom, lab or hostel room switches everything off.</p>
+                <p class="reminder">Reminder: look up before you leave.</p>
+              </article>
+              <article class="card tip-card">
+                <span class="tip-icon"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></span>
+                <h4>Use energy-efficient lighting</h4>
+                <p>LED lights give the same brightness for much less power and last longer than older bulbs.</p>
+                <p class="reminder">Reminder: suggest LEDs when a bulb needs replacing.</p>
+              </article>
+              <article class="card tip-card">
+                <span class="tip-icon"><svg class="icon" aria-hidden="true"><use href="#i-monitor"/></svg></span>
+                <h4>Shut down unused computers</h4>
+                <p>Shut computers and monitors down at the end of a lab session instead of leaving them on standby.</p>
+                <p class="reminder">Reminder: shut down, then unplug if you can.</p>
+              </article>
+              <article class="card tip-card">
+                <span class="tip-icon"><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg></span>
+                <h4>Make better use of daylight</h4>
+                <p>Open curtains and blinds, and sit near windows so lights are not needed during the day.</p>
+                <p class="reminder">Reminder: daylight is free and always on.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         F. ECO CHALLENGES (information cards, no registration)
+         ========================================================= -->
+    <section class="section section-white" id="challenges" aria-labelledby="challenges-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="challenges-title">Eco Challenges</h2>
+          <p>Five campus challenges you can run with your class, hostel or eco club. These are information cards: they do not register or track anyone. Speak to your faculty coordinator to organise one.</p>
+        </header>
+
+        <div class="grid grid-3">
+          <article class="card challenge-card">
+            <svg class="illus" viewBox="0 0 200 120" role="img" aria-label="Plastic bottle with a red cross-out ring"><use href="#ill-plastic"/></svg>
+            <div class="card-body">
+              <h3>Plastic-Free Campus Day</h3>
+              <p>Spend a full day without single-use plastic: no plastic cups, straws, carry bags or packaged snacks.</p>
+              <p class="meta"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg> Suggested duration: 1 day</p>
+              <p class="benefit"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span>Cuts plastic waste that would otherwise end up in bins and drains.</span></p>
+              <details>
+                <summary>Challenge details</summary>
+                <ul>
+                  <li>Carry a cloth bag and a steel or glass bottle.</li>
+                  <li>Ask the canteen to use steel plates and reusable cups for the day.</li>
+                  <li>Count the plastic items you avoided and share the number.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+
+          <article class="card challenge-card">
+            <svg class="illus" viewBox="0 0 200 120" role="img" aria-label="Large tree on a green hill with a small sapling"><use href="#ill-tree"/></svg>
+            <div class="card-body">
+              <h3>Plant-a-Tree Challenge</h3>
+              <p>Plant a native sapling on campus and take responsibility for watering it as it settles in.</p>
+              <p class="meta"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg> Suggested duration: 1 day to plant, then regular care</p>
+              <p class="benefit"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span>Trees give shade, support birds and insects, and absorb carbon dioxide as they grow.</span></p>
+              <details>
+                <summary>Challenge details</summary>
+                <ul>
+                  <li>Get permission from the college and choose a suitable spot.</li>
+                  <li>Pick native species that suit your local climate.</li>
+                  <li>Make a small watering rota among friends.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+
+          <article class="card challenge-card">
+            <svg class="illus" viewBox="0 0 200 120" role="img" aria-label="Reusable water bottle with a leaf label"><use href="#ill-bottle"/></svg>
+            <div class="card-body">
+              <h3>Bring-Your-Own-Bottle Challenge</h3>
+              <p>Carry a reusable bottle every day and refill it at water points instead of buying bottled water.</p>
+              <p class="meta"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg> Suggested duration: 2 weeks</p>
+              <p class="benefit"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span>Every refill replaces a bottle that would have been thrown away.</span></p>
+              <details>
+                <summary>Challenge details</summary>
+                <ul>
+                  <li>Wash your bottle regularly.</li>
+                  <li>Note on a calendar each day you remember it.</li>
+                  <li>Keep a spare bottle in your bag or hostel room.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+
+          <article class="card challenge-card">
+            <svg class="illus" viewBox="0 0 200 120" role="img" aria-label="Full green sack with litter on the ground"><use href="#ill-cleanup"/></svg>
+            <div class="card-body">
+              <h3>Campus Clean-Up Drive</h3>
+              <p>Team up to collect litter from grounds, corridors and the area outside the gate, and sort it as you go.</p>
+              <p class="meta"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg> Suggested duration: 2 to 3 hours</p>
+              <p class="benefit"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span>A cleaner campus is safer, healthier and nicer to study in.</span></p>
+              <details>
+                <summary>Challenge details</summary>
+                <ul>
+                  <li>Wear gloves and closed shoes. Never pick up broken glass or sharp items by hand.</li>
+                  <li>Carry separate bags for dry waste and recyclables.</li>
+                  <li>Hand the bags to the college housekeeping team.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+
+          <article class="card challenge-card">
+            <svg class="illus" viewBox="0 0 200 120" role="img" aria-label="Glowing light bulb with rays"><use href="#ill-power"/></svg>
+            <div class="card-body">
+              <h3>Save Electricity Week</h3>
+              <p>For seven days, make sure every light, fan, projector and computer is off when nobody is using it.</p>
+              <p class="meta"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg> Suggested duration: 7 days</p>
+              <p class="benefit"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span>Less electricity used means lower bills and fewer emissions from power generation.</span></p>
+              <details>
+                <summary>Challenge details</summary>
+                <ul>
+                  <li>Appoint a "switch monitor" for each room.</li>
+                  <li>Stick reminder notes next to switches.</li>
+                  <li>Compare the electricity meter reading before and after, if your college allows.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         G. GREEN CAMPUS DASHBOARD (sample data)
+         ========================================================= -->
+    <section class="section section-mint" id="dashboard" aria-labelledby="dashboard-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="dashboard-title">Green Campus Dashboard</h2>
+          <p class="sample-banner"><strong>Sample data for demonstration.</strong> These numbers are illustrative. They do not come from sensors or college records.</p>
+        </header>
+
+        <div class="dash-grid">
+          <article class="dash-card">
+            <div class="dash-top"><span class="stat-icon stat-waste"><svg class="icon" aria-hidden="true"><use href="#i-recycle"/></svg></span><h3>Waste recycled</h3></div>
+            <p class="dash-value"><span class="count" data-target="250">250</span> kg</p>
+            <div class="bar bar-waste" role="img" aria-label="63 percent of the 400 kilogram sample goal" style="--value:63%"><span></span></div>
+            <p class="dash-goal">63% of the 400 kg sample goal</p>
+          </article>
+          <article class="dash-card">
+            <div class="dash-top"><span class="stat-icon stat-water"><svg class="icon" aria-hidden="true"><use href="#i-drop"/></svg></span><h3>Water saved</h3></div>
+            <p class="dash-value"><span class="count" data-target="1200">1,200</span> litres</p>
+            <div class="bar bar-water" role="img" aria-label="60 percent of the 2,000 litre sample goal" style="--value:60%"><span></span></div>
+            <p class="dash-goal">60% of the 2,000 litre sample goal</p>
+          </article>
+          <article class="dash-card">
+            <div class="dash-top"><span class="stat-icon stat-energy"><svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg></span><h3>Electricity saved</h3></div>
+            <p class="dash-value"><span class="count" data-target="180">180</span> kWh</p>
+            <div class="bar bar-energy" role="img" aria-label="72 percent of the 250 kilowatt-hour sample goal" style="--value:72%"><span></span></div>
+            <p class="dash-goal">72% of the 250 kWh sample goal</p>
+          </article>
+          <article class="dash-card">
+            <div class="dash-top"><span class="stat-icon stat-trees"><svg class="icon" aria-hidden="true"><use href="#i-tree"/></svg></span><h3>Trees planted</h3></div>
+            <p class="dash-value"><span class="count" data-target="75">75</span> trees</p>
+            <div class="bar bar-trees" role="img" aria-label="75 percent of the 100 tree sample goal" style="--value:75%"><span></span></div>
+            <p class="dash-goal">75% of the 100 tree sample goal</p>
+          </article>
+        </div>
+
+        <div class="overall card">
+          <h3>Sample green-campus progress</h3>
+          <p class="overall-figure">67% <span>of this semester's sample goals reached</span></p>
+          <div class="bar bar-overall" role="img" aria-label="67 percent overall sample progress" style="--value:67%"><span></span></div>
+        </div>
+
+        <div class="dash-lower">
+          <div class="card badges-card">
+            <h3>Achievement badges <small>(sample)</small></h3>
+            <ul class="badge-list">
+              <li class="badge earned"><span class="badge-icon"><svg class="icon" aria-hidden="true"><use href="#i-recycle"/></svg></span><strong>Waste Warrior</strong><span class="badge-state">Earned</span></li>
+              <li class="badge earned"><span class="badge-icon"><svg class="icon" aria-hidden="true"><use href="#i-drop"/></svg></span><strong>Water Guardian</strong><span class="badge-state">Earned</span></li>
+              <li class="badge earned"><span class="badge-icon"><svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg></span><strong>Power Saver</strong><span class="badge-state">Earned</span></li>
+              <li class="badge locked"><span class="badge-icon"><svg class="icon" aria-hidden="true"><use href="#i-tree"/></svg></span><strong>Tree Hero</strong><span class="badge-state">Reach 100 trees</span></li>
+            </ul>
+          </div>
+
+          <div class="card leaderboard-card">
+            <h3>Department leaderboard <small>(sample scores)</small></h3>
+            <ol class="leaderboard">
+              <li><span class="lb-name">Computer Science</span><div class="bar bar-lb" role="img" aria-label="920 out of 1000" style="--value:92%"><span></span></div><span class="lb-score">920</span></li>
+              <li><span class="lb-name">Civil Engineering</span><div class="bar bar-lb" role="img" aria-label="860 out of 1000" style="--value:86%"><span></span></div><span class="lb-score">860</span></li>
+              <li><span class="lb-name">Electronics</span><div class="bar bar-lb" role="img" aria-label="810 out of 1000" style="--value:81%"><span></span></div><span class="lb-score">810</span></li>
+              <li><span class="lb-name">Mechanical</span><div class="bar bar-lb" role="img" aria-label="745 out of 1000" style="--value:74.5%"><span></span></div><span class="lb-score">745</span></li>
+              <li><span class="lb-name">Biotechnology</span><div class="bar bar-lb" role="img" aria-label="690 out of 1000" style="--value:69%"><span></span></div><span class="lb-score">690</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         H. RECYCLING INFORMATION
+         ========================================================= -->
+    <section class="section section-white" id="recycling" aria-labelledby="recycling-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="recycling-title">Recycling Information</h2>
+          <p>Recycling only works when the right materials arrive clean and sorted. Here is the short version.</p>
+        </header>
+
+        <div class="grid grid-3">
+          <article class="card info-card">
+            <h3>Why recycling matters</h3>
+            <p>Recycling turns used materials into new products, so fewer raw materials are mined, cut or drilled. It also reduces the amount of waste sent to landfills and often uses less energy than making things from scratch.</p>
+          </article>
+
+          <article class="card info-card">
+            <h3>What can usually be recycled</h3>
+            <ul class="check-list">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Paper and cardboard</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Plastic bottles and containers</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Glass bottles and jars</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Metal cans and tins</li>
+            </ul>
+            <p class="small-note">Local rules differ, so check what your college's collector accepts.</p>
+          </article>
+
+          <article class="card info-card">
+            <h3>How to prepare materials</h3>
+            <ol class="steps">
+              <li>Empty the container completely.</li>
+              <li>Rinse off food and drink.</li>
+              <li>Let it dry.</li>
+              <li>Flatten boxes and crush bottles if allowed.</li>
+              <li>Place it in the recycling bin, not the general bin.</li>
+            </ol>
+          </article>
+
+          <article class="card info-card">
+            <h3>Reduce single-use plastics</h3>
+            <ul class="check-list">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Carry a reusable bottle and cloth bag</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Bring your own cup and cutlery</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Say no to straws and extra packaging</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Choose refills and bulk options</li>
+            </ul>
+          </article>
+
+          <article class="card info-card info-wide">
+            <h3>A cleaner campus</h3>
+            <p>When waste is sorted properly, bins stay cleaner, housekeeping teams work faster, and less litter ends up on lawns and drains. Recycling also gives the campus a visible shared goal: every sorted bottle is a small, countable win.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         I. ABOUT ECOTRACK
+         ========================================================= -->
+    <section class="section section-cream" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="about-title">About EcoTrack</h2>
+          <p>EcoTrack is a college mini project that shows how a campus can make sustainability simple, visible and shared.</p>
+        </header>
+
+        <div class="about-grid">
+          <article class="card about-card about-mission">
+            <h3>Our mission</h3>
+            <p>To help every student understand the small daily choices that reduce waste and save resources, and to make those choices easy to start.</p>
+            <h3>Environmental goals</h3>
+            <ul class="check-list">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Segregate waste at the source</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Use less water and electricity</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Recycle more and use less single-use plastic</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Grow the campus tree cover</li>
+            </ul>
+          </article>
+
+          <article class="card about-card">
+            <h3>Benefits for students</h3>
+            <p>Practical habits, leadership experience through challenges, and a healthier place to study and live.</p>
+            <h3>Benefits for the college</h3>
+            <p>Lower utility bills, less waste to manage, and a stronger green reputation.</p>
+          </article>
+
+          <article class="card about-card">
+            <h3>How you can contribute</h3>
+            <ul class="check-list">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Sort your waste every day</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Switch off lights, fans and taps</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Report leaks and faults</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Run or join an eco challenge</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Share these tips with a friend</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       J. FOOTER
+       ========================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="logo logo-on-dark" href="#home" aria-label="EcoTrack home">
+          <span class="logo-mark"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+          <span class="logo-text">EcoTrack</span>
+        </a>
+        <p class="footer-message">The greenest campus is the one where everyone does a little, every day.</p>
+        <p class="project-label">College Mini Project</p>
+      </div>
+
+      <nav aria-label="Footer navigation">
+        <h2 class="footer-title">Quick links</h2>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#waste">Waste Management</a></li>
+          <li><a href="#resources">Save Resources</a></li>
+          <li><a href="#challenges">Eco Challenges</a></li>
+          <li><a href="#dashboard">Green Dashboard</a></li>
+          <li><a href="#recycling">Recycling</a></li>
+          <li><a href="#about">About Us</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="footer-title">Contact (sample details)</h2>
+        <ul class="contact-list">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg> ecotrack@example.edu</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg> Your College Name, City</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-badge"/></svg> Project team: add names here</li>
+        </ul>
+        <p class="small-note on-dark">Placeholders: replace with your own details.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 EcoTrack. College mini project. All sample figures are for demonstration only.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

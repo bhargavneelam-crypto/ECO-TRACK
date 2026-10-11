@@ -1,0 +1,772 @@
+/* =========================================================
+   EcoTrack — Smart Green Campus
+   Table of contents
+   1. Design tokens (CSS variables)
+   2. Reset and base
+   3. Layout helpers
+   4. Header and navigation
+   5. Hero
+   6. Statistics
+   7. Shared card styles
+   8. Waste management
+   9. Save water and electricity
+   10. Eco challenges
+   11. Dashboard
+   12. Recycling and About
+   13. Footer
+   14. Progress bars
+   15. Responsive (media queries)
+   16. Reduced motion
+   ========================================================= */
+
+/* ---------- 1. Design tokens ---------- */
+:root {
+  --forest: #14452f;
+  --forest-deep: #0e3322;
+  --leaf: #4c9a2a;
+  --leaf-light: #6db33f;
+  --mint: #e3f0da;
+  --cream: #f8f5e9;
+  --white: #ffffff;
+  --ink: #1d2b23;
+  --ink-soft: #4a5a50;
+  --water: #2a7a9b;
+  --energy: #d99a00;
+  --line: rgba(20, 69, 47, 0.12);
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --shadow-card: 0 12px 30px -14px rgba(20, 69, 47, 0.35);
+  --shadow-lift: 0 22px 40px -16px rgba(20, 69, 47, 0.4);
+  --header-h: 68px;
+}
+
+/* ---------- 2. Reset and base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 12px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--cream);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--forest);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  font-weight: 700;
+}
+h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
+h3 { font-size: 1.35rem; }
+h4 { font-size: 1.12rem; }
+
+p { margin: 0 0 0.9em; }
+ul, ol { margin: 0; padding: 0; }
+img, svg { max-width: 100%; }
+a { color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--energy);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Reusable icon: stroke icons from the SVG sprite */
+.icon {
+  width: 1.4em;
+  height: 1.4em;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- 3. Layout helpers ---------- */
+.container {
+  width: min(1160px, 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+.section { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+.section-white { background: var(--white); }
+.section-cream { background: var(--cream); }
+.section-mint  { background: var(--mint); }
+
+.section-head { max-width: 46rem; margin-bottom: 2.5rem; }
+.section-head p { color: var(--ink-soft); font-size: 1.12rem; margin-bottom: 0; }
+
+.grid { display: grid; gap: 1.5rem; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem; top: -4rem;
+  z-index: 200;
+  padding: 0.6rem 1rem;
+  background: var(--forest);
+  color: var(--white);
+  border-radius: 8px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0.75rem; }
+
+/* ---------- 4. Header and navigation ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-h);
+  background: rgba(248, 245, 233, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--forest);
+}
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border-radius: 12px 12px 12px 4px;
+  background: var(--forest);
+  color: var(--white);
+  transition: transform 0.3s ease;
+}
+.logo:hover .logo-mark { transform: rotate(-8deg) scale(1.05); }
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 0.25rem;
+}
+.site-nav a {
+  display: block;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.97rem;
+  color: var(--forest);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.site-nav a:hover { background: var(--mint); }
+.site-nav a[aria-current="true"] { background: var(--forest); color: var(--white); }
+
+/* Mobile menu toggle (checkbox hack: no JavaScript needed) */
+.nav-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.nav-burger {
+  display: none;
+  width: 44px; height: 44px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 12px;
+}
+.nav-burger .bars,
+.nav-burger .bars::before,
+.nav-burger .bars::after {
+  display: block;
+  width: 22px; height: 2.5px;
+  background: var(--forest);
+  border-radius: 2px;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+.nav-burger .bars { position: relative; }
+.nav-burger .bars::before,
+.nav-burger .bars::after { content: ""; position: absolute; left: 0; }
+.nav-burger .bars::before { top: -7px; }
+.nav-burger .bars::after  { top: 7px; }
+
+.nav-toggle:checked + .nav-burger .bars { background: transparent; }
+.nav-toggle:checked + .nav-burger .bars::before { transform: translateY(7px) rotate(45deg); }
+.nav-toggle:checked + .nav-burger .bars::after  { transform: translateY(-7px) rotate(-45deg); }
+.nav-toggle:focus-visible + .nav-burger { outline: 3px solid var(--energy); outline-offset: 2px; }
+
+/* ---------- 5. Hero ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: min(88vh, 720px);
+  display: flex;
+  align-items: center;
+  padding: 4rem 0 9rem;
+  background: var(--cream);
+  overflow: hidden;
+}
+.hero-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.3em;
+}
+.hero-sub {
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  font-weight: 500;
+  color: var(--forest);
+  max-width: 30rem;
+}
+.hero-note {
+  max-width: 30rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.75rem;
+}
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+.btn {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid var(--forest);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+.btn:hover { transform: translateY(-3px); box-shadow: 0 12px 22px -10px rgba(20, 69, 47, 0.55); }
+.btn-primary { background: var(--forest); color: var(--white); }
+.btn-primary:hover { background: var(--leaf); border-color: var(--leaf); }
+.btn-light { background: var(--white); color: var(--forest); }
+.btn-light:hover { background: var(--mint); }
+
+/* One orchestrated entrance when the page loads */
+.hero-copy > * { animation: rise 0.8s ease both; }
+.hero-copy > :nth-child(2) { animation-delay: 0.1s; }
+.hero-copy > :nth-child(3) { animation-delay: 0.2s; }
+.hero-copy > :nth-child(4) { animation-delay: 0.3s; }
+.hero-pledge { animation: rise 0.9s 0.4s ease both; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero-pledge {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+}
+.pledge-title { font-size: 1.25rem; margin-bottom: 1rem; }
+.hero-pledge ul { list-style: none; display: grid; gap: 0.85rem; }
+.hero-pledge li { display: flex; align-items: center; gap: 0.85rem; line-height: 1.35; }
+.pledge-icon {
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--forest);
+  flex-shrink: 0;
+}
+
+/* ---------- 6. Statistics ---------- */
+.stats {
+  position: relative;
+  margin-top: -5.5rem;
+  z-index: 2;
+  padding-bottom: 1rem;
+}
+.stat-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  border-top: 5px solid var(--accent, var(--leaf));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lift); }
+
+.stat-waste  { --accent: var(--leaf); }
+.stat-water  { --accent: var(--water); }
+.stat-energy { --accent: var(--energy); }
+.stat-trees  { --accent: var(--forest); }
+
+.stat-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 46px; height: 46px;
+  border-radius: 14px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, white);
+  margin-bottom: 0.9rem;
+}
+.stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--forest);
+  margin-bottom: 0.35rem;
+}
+.stat-value .unit { font-size: 1rem; font-family: var(--font-body); font-weight: 600; color: var(--ink-soft); }
+.stat-label { margin: 0; color: var(--ink-soft); font-weight: 500; }
+
+.sample-note {
+  margin: 1.1rem 0 0;
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- 7. Shared card styles ---------- */
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.section-white .card { background: var(--cream); }
+.card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lift); }
+
+.card-body { padding: 1.25rem 1.4rem 1.5rem; }
+
+.illus {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  background: var(--mint); /* fallback colour behind the illustration */
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.9rem; }
+.chips span {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  background: var(--mint);
+  color: var(--forest);
+}
+
+.mini-title {
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--leaf);
+}
+
+.benefit {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  margin: 1rem 0 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-md);
+  background: var(--mint);
+  color: var(--forest);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+.benefit .icon { margin-top: 0.05rem; color: var(--leaf); }
+
+.small-note { font-size: 0.9rem; color: var(--ink-soft); margin: 0.8rem 0 0; }
+
+/* ---------- 8. Waste management ---------- */
+.waste-card h3 { margin-bottom: 0.6em; }
+.waste-card .card-body p { font-size: 0.97rem; }
+
+/* ---------- 9. Save water and electricity ---------- */
+.resource-split { display: grid; gap: 3rem; }
+
+.group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+  font-size: 1.6rem;
+}
+.group-water .group-title .icon { color: var(--water); }
+.group-power .group-title .icon { color: var(--energy); }
+
+.tip-card { padding: 1.4rem; border-left: 5px solid var(--tip, var(--water)); }
+.group-power .tip-card { --tip: var(--energy); }
+.tip-card h4 { margin-bottom: 0.4em; }
+.tip-card p { font-size: 0.98rem; }
+
+.tip-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 46px; height: 46px;
+  margin-bottom: 0.8rem;
+  border-radius: 14px;
+  color: var(--tip, var(--water));
+  background: color-mix(in srgb, var(--tip, var(--water)) 14%, white);
+  transition: transform 0.3s ease;
+}
+.tip-card:hover .tip-icon { transform: rotate(-8deg) scale(1.08); }
+
+.reminder {
+  margin: 0.4rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--line);
+  font-size: 0.9rem !important;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+/* ---------- 10. Eco challenges ---------- */
+.challenge-card { display: flex; flex-direction: column; }
+.challenge-card .card-body { display: flex; flex-direction: column; flex: 1; }
+.challenge-card p { font-size: 0.98rem; }
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 0.4rem !important;
+}
+.meta .icon { color: var(--leaf); }
+
+/* Native <details> element: opens without JavaScript */
+details { margin-top: auto; padding-top: 1rem; }
+summary {
+  display: inline-block;
+  list-style: none;
+  cursor: pointer;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  border: 2px solid var(--forest);
+  color: var(--forest);
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after { content: " +"; }
+details[open] > summary::after { content: " \2212"; }
+summary:hover, details[open] > summary { background: var(--forest); color: var(--white); }
+
+details ul {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+/* ---------- 11. Dashboard ---------- */
+.sample-banner {
+  display: inline-block;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  background: #fff8dc;
+  border: 1px dashed var(--energy);
+  color: var(--ink) !important;
+  font-size: 1rem !important;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.dash-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.dash-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+.dash-top { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
+.dash-top h3 { font-size: 1.05rem; font-family: var(--font-body); margin: 0; }
+.dash-top .stat-icon { margin: 0; width: 40px; height: 40px; }
+.dash-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--forest);
+  margin-bottom: 0.6rem;
+  line-height: 1.1;
+}
+.dash-goal { margin: 0.5rem 0 0; font-size: 0.88rem; color: var(--ink-soft); }
+
+.overall { padding: 1.6rem; margin-bottom: 1.5rem; background: var(--forest); border: 0; color: var(--white); }
+.section-white .overall { background: var(--forest); }
+.overall h3 { color: var(--white); margin-bottom: 0.3em; }
+.overall-figure { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; margin-bottom: 0.7rem; }
+.overall-figure span { font-family: var(--font-body); font-size: 1rem; font-weight: 500; opacity: 0.85; }
+.overall:hover { transform: none; }
+
+.dash-lower { display: grid; grid-template-columns: 1fr 1.2fr; gap: 1.5rem; }
+.badges-card, .leaderboard-card { padding: 1.6rem; }
+.badges-card h3 small, .leaderboard-card h3 small { font-family: var(--font-body); font-size: 0.85rem; color: var(--ink-soft); font-weight: 500; }
+
+.badge-list { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+.badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.35rem;
+  padding: 1rem 0.6rem;
+  border-radius: var(--radius-md);
+  background: var(--mint);
+  line-height: 1.25;
+  transition: transform 0.25s ease;
+}
+.badge:hover { transform: scale(1.04); }
+.badge-icon {
+  display: grid; place-items: center;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #f6d27a;
+  box-shadow: 0 0 0 4px #f6d27a55;
+}
+.badge-state { font-size: 0.82rem; color: var(--ink-soft); }
+.badge.earned .badge-state { color: var(--leaf); font-weight: 700; }
+.badge.locked { background: #eef0ec; }
+.badge.locked .badge-icon { background: #b9c2bb; color: var(--white); box-shadow: none; }
+.badge.locked strong { color: var(--ink-soft); }
+
+.leaderboard { list-style: none; counter-reset: rank; display: grid; gap: 0.95rem; }
+.leaderboard li {
+  counter-increment: rank;
+  display: grid;
+  grid-template-columns: 1.6rem minmax(7rem, 11rem) 1fr 2.6rem;
+  align-items: center;
+  gap: 0.7rem;
+}
+.leaderboard li::before {
+  content: counter(rank);
+  display: grid; place-items: center;
+  width: 1.6rem; height: 1.6rem;
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--forest);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.leaderboard li:first-child::before { background: #f6d27a; }
+.lb-name { font-weight: 600; font-size: 0.97rem; line-height: 1.2; }
+.lb-score { font-weight: 700; color: var(--forest); text-align: right; }
+
+/* ---------- 12. Recycling and About ---------- */
+.info-card, .about-card { padding: 1.6rem; }
+.info-card p, .about-card p { font-size: 0.98rem; }
+.info-wide { grid-column: span 2; background: var(--mint) !important; }
+
+.check-list { list-style: none; display: grid; gap: 0.55rem; margin-bottom: 0.5rem; }
+.check-list li { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.98rem; line-height: 1.4; }
+.check-list .icon { margin-top: 0.1rem; color: var(--leaf); stroke-width: 2.6; }
+
+/* Genuinely sequential content, so numbered markers are appropriate */
+.steps { list-style: none; counter-reset: step; display: grid; gap: 0.6rem; }
+.steps li {
+  counter-increment: step;
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+.steps li::before {
+  content: counter(step);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  width: 1.6rem; height: 1.6rem;
+  border-radius: 50%;
+  background: var(--forest);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.about-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 1.5rem; }
+.about-card h3:not(:first-child) { margin-top: 1.4rem; }
+
+/* ---------- 13. Footer ---------- */
+.site-footer { background: var(--forest-deep); color: #dce9d9; padding-top: 3.5rem; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1.2fr; gap: 2.5rem; padding-bottom: 2.5rem; }
+
+.logo-on-dark { color: var(--white); }
+.logo-on-dark .logo-mark { background: var(--leaf); }
+
+.footer-message { margin: 1rem 0; max-width: 22rem; }
+.project-label {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.footer-title {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--white);
+  margin-bottom: 0.9rem;
+}
+.footer-links, .contact-list { list-style: none; display: grid; gap: 0.5rem; }
+.footer-links a { text-decoration: none; transition: color 0.2s ease, padding 0.2s ease; }
+.footer-links a:hover { color: #f6d27a; padding-left: 4px; }
+.contact-list li { display: flex; align-items: center; gap: 0.6rem; }
+.contact-list .icon { color: var(--leaf-light); }
+.on-dark { color: #a9c2a6; }
+
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.14); padding: 1.1rem 1.25rem; text-align: center; font-size: 0.9rem; }
+.footer-bottom p { margin: 0; }
+
+/* ---------- 14. Progress bars ---------- */
+/* Width comes from the --value variable set in the HTML, so bars work without JavaScript */
+.bar {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(20, 69, 47, 0.12);
+  overflow: hidden;
+}
+.bar span {
+  display: block;
+  height: 100%;
+  width: var(--value);
+  border-radius: 999px;
+  background: var(--bar, var(--leaf));
+}
+.bar-water  { --bar: var(--water); }
+.bar-energy { --bar: var(--energy); }
+.bar-trees  { --bar: var(--forest); }
+.bar-overall { height: 18px; background: rgba(255, 255, 255, 0.2); }
+.bar-overall span { background: linear-gradient(90deg, var(--leaf-light), #f6d27a); }
+
+/* Optional animation: only when script.js has added the .js class */
+.js .bar span { width: 0; transition: width 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.js .bar.is-visible span { width: var(--value); }
+
+/* ---------- 15. Responsive ---------- */
+@media (max-width: 1100px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid, .dash-grid { grid-template-columns: repeat(2, 1fr); }
+  .site-nav a { padding: 0.5rem 0.6rem; font-size: 0.9rem; }
+}
+
+@media (max-width: 900px) {
+  /* Collapse the nav into a dropdown panel */
+  .nav-burger { display: flex; }
+  .site-nav {
+    position: absolute;
+    top: var(--header-h);
+    left: 0; right: 0;
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 18px 30px -18px rgba(20, 69, 47, 0.4);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .nav-toggle:checked ~ .site-nav { max-height: 420px; }
+  .site-nav ul { flex-direction: column; padding: 0.75rem 1.25rem 1.1rem; }
+  .site-nav a { padding: 0.8rem 1rem; font-size: 1.02rem; }
+
+  .hero { padding-bottom: 8rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .dash-lower, .about-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 1rem; }
+  .container { width: min(1160px, 100% - 2rem); }
+
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .stat-grid, .dash-grid { grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  .stat-card, .dash-card { padding: 1.1rem; }
+  .stats { margin-top: -4.5rem; }
+
+  .info-wide { grid-column: auto; }
+  .badge-list { grid-template-columns: 1fr 1fr; }
+  .leaderboard li { grid-template-columns: 1.6rem 1fr 2.4rem; }
+  .leaderboard .bar { grid-column: 2 / 4; grid-row: 2; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .btn { width: 100%; text-align: center; }
+}
+
+@media (max-width: 380px) {
+  .stat-grid, .dash-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- 16. Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
